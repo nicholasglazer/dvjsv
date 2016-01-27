@@ -86,8 +86,8 @@ set autoread " detect when a file is changed
 set backspace=indent,eol,start
 
 " set a map leader for more key combos
-let mapleader = ','
-let g:mapleader = ','
+let mapleader = ' '
+let g:mapleader = ' '
 
 set history=1000 " change history to 1000
 set textwidth=120
@@ -161,11 +161,130 @@ set foldmethod=syntax " fold based on indent
 set foldnestmax=10 " deepest fold is 10 levels
 set nofoldenable " don't fold by default
 set foldlevel=1
+" change vim cursor in insert mode
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" General mappings/shortcuts for functionality
+" Additional, plugin-specific mappings are located under
+" the plugins section
+" Close the current buffer
+" noremap <C-x> :q<cr>
+" this will tell vim to explictly listen to extended F keys (from 13 to 37) which it does not do by default.
+
+set <F13>=^[[25~
+"Toggling normal/insert mode in vim
+"vim accepts two kinds of mapping. Those triggered in normal mode (using nnoremap) and those triggered in insert mode (using inoremap).
+
+"Here we want that pressing CapsLock (or <F13> in vim as we defined) in normal mode will go to insert mode, like pressing i does. And we also want to get back to normal mode when pressing CapsLock in insert mode, just like pressing Esc does.
+
+nnoremap <F13> i
+inoremap <F13> <Esc>l
+"Notice the l after Esc. It is here to prevent the caret to move back one character when exiting insert mode.
+
+" As I'm using Dvorak layout, I want to remap move buttons
+" You may also consider remapping Q and X instead so you get QJKX on the bottom row for navigation (for your left hand).
+nnoremap q h
+nnoremap Q H
+nnoremap h x
+nnoremap H X
+nnoremap x l
+nnoremap X L
+nnoremap l q
+nnoremap L Q 
+"And this would allow navigation with the bottom keys, delete with the H key. and recording macros with the L key. This is not hard to remember because although X is traditionally the delete character, H is also known for delete in the form 
+"of <c-h> and the L key is kind of on the opposite side of the keyboard from the traditional Q key, so EX mode 
+"and macros are back to roughly where they would be anyway. 
+
+" switch between current and last buffer
+nmap <leader>. <c-^>
+
+" enable . command in visual mode
+vnoremap . :normal .<cr>
+
+map <silent> <C-h> :call WinMove('q')<cr>
+map <silent> <C-j> :call WinMove('j')<cr>
+map <silent> <C-k> :call WinMove('k')<cr>
+map <silent> <C-l> :call WinMove('x')<cr>
+
+map <leader>wc :wincmd q<cr>
+
+" toggle cursor line
+nnoremap <leader>i :set cursorline!<cr>
+
+" markdown to html
+nmap <leader>md :%!markdown --html4tags <cr>
+
+" remove extra whitespace
+nmap <leader><space> :%s/\s\+$<cr>
+
+" wipout buffer
+nmap <silent> <leader>b :bw<cr>
+
+" shortcut to save
+nmap <leader>, :w<cr>
+
+" disable Ex mode
+noremap Q <NOP>
+
+" set paste toggle
+set pastetoggle=<F6>
+
+" toggle paste mode
+map <leader>v :set paste!<cr>
+
+" edit ~/.config/nvim/init.vim
+map <leader>ev :e! ~/.config/nvim/init.vim<cr>
+" edit gitconfig
+map <leader>eg :e! ~/.gitconfig<cr>
+
+" clear highlighted search
+noremap <space> :set hlsearch! hlsearch?<cr>
+
+" activate spell-checking alternatives
+nmap ;s :set invspell spelllang=en<cr>
+
+" toggle invisible characters
+set invlist
+set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
+set showbreak=↪
+nmap <leader>lll :set list!<cr>
+
+" Textmate style indentation
+vmap <leader>[ <gv
+vmap <leader>] >gv
+nmap <leader>[ <<
+nmap <leader>] >>
+
+" scroll the viewport faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" moving up and down work as you would expect
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+nnoremap <silent> ^ g^
+nnoremap <silent> $ g$
+
+" search for word under the cursor
+nnoremap <leader>/ "fyiw :/<c-r>f<cr>
+
+" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+
+map <leader>r :call RunCustomCommand()<cr>
+" map <leader>s :call SetCustomCommand()<cr>
+let g:silent_custom_command = 0
+
+" helpers for dealing with other people's code
+nmap \t :set ts=4 sts=4 sw=4 noet<cr>
+nmap \s :set ts=4 sts=4 sw=4 et<cr>
+
+nmap <leader>w :setf textile<cr> :Goyo<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => User Interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 set so=7 " set 7 lines to the cursors - when moving vertical
 set wildmenu " enhanced command line completion
 set hidden " current buffer can be put into background
@@ -189,12 +308,16 @@ set magic " Set magic on, for regex
 
 set showmatch " show matching braces
 set mat=2 " how many tenths of a second to blink
-
+" test nvim setting
+"  if has('nvim')
+"     set ttimeout
+"     set ttimeoutlen=0
+"  endif
 " error bells
-set noerrorbells
-set visualbell
-set t_vb=
-set tm=500
+" set noerrorbells
+" set visualbell
+"set t_vb=
+"set tm=500
 
 " switch syntax highlighting on
 syntax on
@@ -234,104 +357,6 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 
 set laststatus=2 " show the satus line all the time
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" General mappings/shortcuts for functionality
-" Additional, plugin-specific mappings are located under
-" the plugins section
-
-" Close the current buffer
-" noremap <C-x> :q<cr>
-
-" remap esc
-inoremap jk <esc>
-
-" markdown to html
-nmap <leader>md :%!markdown --html4tags <cr>
-
-" remove extra whitespace
-nmap <leader><space> :%s/\s\+$<cr>
-
-" wipout buffer
-nmap <silent> <leader>b :bw<cr>
-
-" shortcut to save
-nmap <leader>, :w<cr>
-
-" disable Ex mode
-noremap Q <NOP>
-
-" set paste toggle
-set pastetoggle=<F6>
-
-" toggle paste mode
-map <leader>v :set paste!<cr>
-
-" edit ~/.config/nvim/init.vim
-map <leader>ev :e! ~/.config/nvim/init.vim<cr>
-" edit gitconfig
-map <leader>eg :e! ~/.gitconfig<cr>
-
-" clear highlighted search
-noremap <space> :set hlsearch! hlsearch?<cr>
-
-" activate spell-checking alternatives
-nmap ;s :set invspell spelllang=en<cr>
-
-" toggle invisible characters
-set invlist
-set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
-set showbreak=↪
-nmap <leader>l :set list!<cr>
-
-" Textmate style indentation
-vmap <leader>[ <gv
-vmap <leader>] >gv
-nmap <leader>[ <<
-nmap <leader>] >>
-
-" switch between current and last buffer
-nmap <leader>. <c-^>
-
-" enable . command in visual mode
-vnoremap . :normal .<cr>
-
-map <silent> <C-h> :call WinMove('h')<cr>
-map <silent> <C-j> :call WinMove('j')<cr>
-map <silent> <C-k> :call WinMove('k')<cr>
-map <silent> <C-l> :call WinMove('l')<cr>
-
-map <leader>wc :wincmd q<cr>
-
-" toggle cursor line
-nnoremap <leader>i :set cursorline!<cr>
-
-" scroll the viewport faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-
-" moving up and down work as you would expect
-nnoremap <silent> j gj
-nnoremap <silent> k gk
-nnoremap <silent> ^ g^
-nnoremap <silent> $ g$
-
-" search for word under the cursor
-nnoremap <leader>/ "fyiw :/<c-r>f<cr>
-
-" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
-
-map <leader>r :call RunCustomCommand()<cr>
-" map <leader>s :call SetCustomCommand()<cr>
-let g:silent_custom_command = 0
-
-" helpers for dealing with other people's code
-nmap \t :set ts=4 sts=4 sw=4 noet<cr>
-nmap \s :set ts=4 sts=4 sw=4 et<cr>
-
-nmap <leader>w :setf textile<cr> :Goyo<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Functions
@@ -468,14 +493,13 @@ let NERDTreeShowHidden=1
 " remove some files by extension
 let NERDTreeIgnore = ['\.js.map$']
 " Toggle NERDTree
-nmap <silent> <leader>k :NERDTreeToggle<cr>
 " expand to the path of the file in the current buffer
 nmap <silent> <leader>y :NERDTreeFind<cr>
 
 " map fuzzyfinder (CtrlP) plugin
-" nmap <silent> <leader>t :CtrlP<cr>
-nmap <silent> <leader>r :CtrlPBuffer<cr>
-let g:ctrlp_map='<leader>t'
+" nmap <silent> <leader>f :CtrlP<cr>
+" nmap <silent> <leader>r :CtrlPBuffer<cr>
+let g:ctrlp_map='<leader>f'
 let g:ctrlp_dotfiles=1
 let g:ctrlp_working_path_mode = 'ra'
 
@@ -489,7 +513,9 @@ nmap <leader>m :MarkedOpen!<cr>
 nmap <leader>mq :MarkedQuit<cr>
 
 " toggle Limelight
-nmap <leader>f :Limelight!!<cr>
+nmap <leader>ll :Limelight!!<cr>
+nmap <Leader>l <Plug>(Limelight)
+
 
 let g:neomake_javascript_jshint_maker = {
     \ 'args': ['--verbose'],

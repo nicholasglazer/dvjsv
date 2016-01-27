@@ -1,4 +1,6 @@
-set -g default-command "reattach-to-user-namespace -l zsh"
+# For mac users, uncomment this to run tmux without errors
+# set -g default-command "reattach-to-user-namespace -l zsh"
+
 # tmux display things in 256 colors
 set -g default-terminal "screen-256color"
 set -g status-utf8 on
@@ -8,10 +10,6 @@ set -g history-limit 20000
 # automatically renumber tmux windows
 set -g renumber-windows on
 
-# unbind default prefix and set it to Ctrl+a
-unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
 
 # for nested tmux sessions
 bind-key a send-prefix
@@ -32,11 +30,6 @@ set -sg escape-time 0
 unbind =
 bind = select-layout tiled
 
-# cycle through panes
-# unbind C-a
-# unbind o # this is the default key for cycling panes
-# bind ^A select-pane -t:.+
-
 # make window/pane index start with 1
 set -g base-index 1
 setw -g pane-base-index 1
@@ -48,6 +41,16 @@ set-option -g set-titles-string "#T - #W"
 ######################
 #### Key Bindings ####
 ######################
+
+# unbind default prefix and set it to Ctrl+a
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+#
+# cycle through panes
+unbind C-a
+unbind o # this is the default key for cycling panes
+bind ^A select-pane -t:.+
 
 # reload config file
 bind r source-file ~/.tmux.conf \; display "Config Reloaded!"
@@ -63,32 +66,20 @@ bind - split-window -v -c "#{pane_current_path}"
 bind y setw synchronize-panes
 
 # pane movement shortcuts
-bind h select-pane -L
+# *notice that this keybindings is for dvorak layout, so you can change it to  h - j - k - l  if you'r using querty layout
+bind q select-pane -L
 bind j select-pane -D
 bind k select-pane -U
-bind l select-pane -R
+bind x select-pane -R
 
-bind -r C-h select-window -t :-
-bind -r C-l select-window -t :+
+bind -r C-q select-window -t :-
+bind -r C-x select-window -t :+
 
 # Resize pane shortcuts
-bind -r H resize-pane -L 10
+bind -r Q resize-pane -L 10
 bind -r J resize-pane -D 10
 bind -r K resize-pane -U 10
-bind -r L resize-pane -R 10
-
-# enable mouse support for switching panes/windows
-setw -g mouse on
-# set-option -g -q mouse on
-
-bind-key -T root PPage if-shell -F "#{alternate_on}" "send-keys PPage" "copy-mode -e; send-keys PPage"
-bind-key -t vi-copy PPage page-up
-bind-key -t vi-copy NPage page-down
-
-bind -T root WheelUpPane if-shell -F -t = "#{alternate_on}" "select-pane -t =; send-keys -M" "select-pane -t =; copy-mode -e; send-keys -M"
-bind -T root WheelDownPane if-shell -F -t = "#{alternate_on}" "select-pane -t =; send-keys -M" "select-pane -t =; send-keys -M"
-bind-key -t vi-copy WheelUpPane halfpage-up
-bind-key -t vi-copy WheelDownPane halfpage-down
+bind -r X resize-pane -R 10
 
 # maximizing and restoring windows
 unbind Up
@@ -98,6 +89,7 @@ bind Down last-window \; swap-pane -s fullscreen.1 \; kill-window -t fullscreen
 
 # set vi mode for copy mode
 setw -g mode-keys vi
+
 # more settings to make copy-mode more vim-like
 unbind [
 bind Escape copy-mode
@@ -106,12 +98,41 @@ bind p paste-buffer
 bind -t vi-copy 'v' begin-selection
 bind -t vi-copy 'y' copy-selection
 
-# Buffers to/from Mac clipboard, yay tmux book from pragprog
-bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
-bind C-v run "tmux set-buffer $(reattach-to-user-namespace pbpaste); tmux paste-buffer"
+# switch windows alt+number
+bind-key -n M-1 select-window -t 1
+bind-key -n M-2 select-window -t 2
+bind-key -n M-3 select-window -t 3
+bind-key -n M-4 select-window -t 4
+bind-key -n M-5 select-window -t 5
+bind-key -n M-6 select-window -t 6
+bind-key -n M-7 select-window -t 7
+bind-key -n M-8 select-window -t 8
+bind-key -n M-9 select-window -t 9
 
 ##############################
 ### Color & Style Settings ###
 ##############################
 
 source ~/.dotfiles/tmux/theme.sh
+
+##############################
+### Tmux plugins with tpm  ###
+##############################
+#List of plugins
+set -g @tpm_plugins '          \
+  tmux-plugins/tpm             \
+  tmux-plugins/tmux-sensible   \
+  tmux-plugins/tmux-copycat  \
+  tmux-plugins/tmux-yank  \
+  tmux-plugins/tmux-battery  \
+  tmux-plugins/tmux-online-status \
+  tmux-plugins/tmux-open  \
+  tmux-plugins/tmux-continuum  \
+  jimeh/tmuxifier \
+'
+#install tmp itself
+if "test ! -d ~/.tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm'"
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'

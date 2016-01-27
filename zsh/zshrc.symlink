@@ -1,11 +1,11 @@
 export DOTFILES=$HOME/.dotfiles
 export ZSH=$DOTFILES/zsh
+export PATH="$HOME/.tmuxifier/bin:$PATH"
 
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
 
 [[ -e ~/.terminfo ]] && export TERMINFO_DIRS=~/.terminfo:/usr/share/terminfo
-
 # define the code directory
 # This is where my code exists and where I want the `c` autocomplete to work from exclusively
 if [[ -d ~/code ]]; then
@@ -18,8 +18,8 @@ for config ($ZSH/**/*.zsh) source $config
 if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
-
-
+:
+eval "$(tmuxifier init -)"
 # initialize autocomplete
 autoload -U compinit
 compinit
@@ -34,6 +34,11 @@ export PATH=/usr/local/bin:$PATH
 if [[ -d /usr/local/sbin ]]; then
     export PATH=/usr/local/sbin:$PATH
 fi
+
+#rubi environment not needed now
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+#export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 # adding path directory for custom scripts
 export PATH=$DOTFILES/bin:$PATH
@@ -57,7 +62,8 @@ if hash brew 2>/dev/null; then
     source $(brew --prefix nvm)/nvm.sh
     source `brew --prefix`/etc/profile.d/z.sh
 fi
-
+# pressing F13 does nothing
+bindkey -s "\e[25~" ""
 
 # Base16 Shell
 # if [ -z "$THEME" ]; then
@@ -71,3 +77,41 @@ BASE16_SHELL="$DOTFILES/.config/base16-shell/$THEME.$BACKGROUND.sh"
 # [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 source $BASE16_SHELL
 
+# |======= my aliases here =======|
+
+#change videocard with prime 
+alias intel='sudo prime-select intel'
+alias nvidia='sudo prime-select nvidia'
+alias videocard='prime-select query'
+
+#git
+alias push='git push origin master'
+alias pull='git pull origin master'
+#commented for now to avoid same alises usage
+#alias ga='git add -A'
+#alias gc='git commit -m'
+#alias gs='git status'
+#alias gco='git checkout'
+#other
+alias ff='/usr/local/firefox/firefox'n
+alias tmk="tmux kill-session -t"
+alias ..="cd .."
+alias s='sudo'
+alias sag="sudo apt-get"
+alias i="sudo apt-get install"
+alias nis="npm install --save"
+alias nig="sudo npm install -g"
+alias npmout="sudo npm outdated -g —depth=0"
+alias u="sudo apt-get update"
+alias ug="sudo apt-get upgrade"
+alias dug="sudo apt-get dist-upgrade"
+alias pg="cd ~/code/playground"
+alias a="cd ~/code/myapp/AnimeFan"
+alias pj="cd ~/code/proj"
+alias j="cd ~/code/job"
+alias ncu="sudo ncu"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+eval "$(thefuck --alias f)"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
