@@ -1,0 +1,43 @@
+# echo "Env is running"
+s="subl"
+c="chromium-browser"
+ce="chromium-browse"
+f="firefox"
+t="gnome-terminal --geometry 106x30+0+0"
+te="gnome-terminal"
+
+if pgrep "$s" > /dev/null
+    then 
+    	echo "$s already in process"
+    else 
+    	echo "starting $s" && $s &
+fi 
+
+if pgrep "$f" > /dev/null
+    then 
+   		echo "$f already in process"
+    else
+    	echo "starting $f" && $f &
+fi
+
+if pgrep "$ce" > /dev/null
+    then 
+       	echo "$c already in process"
+    else 
+       	echo "starting $c" && $c &
+fi
+
+if pgrep "$te" > /dev/null
+    then 
+    	echo "$t already in process"
+    else 
+    	echo "starting $t" && $t &
+fi
+
+
+# if [ "$(pidof $c)" ]
+# then
+# 	echo "running"
+# else 	
+# 	echo "Stopped"
+# fi
