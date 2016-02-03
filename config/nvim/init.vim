@@ -63,6 +63,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'timcharper/textile.vim', { 'for': 'textile' }
 Plug 'tclem/vim-arduino'
 " Plug 'davidoc/taskpaper.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 call plug#end()
 
@@ -170,19 +171,19 @@ set foldlevel=1
 " the plugins section
 " Close the current buffer
 " noremap <C-x> :q<cr>
-" this will tell vim to explictly listen to extended F keys (from 13 to 37) which it does not do by default.
 
+" This will tell vim to explictly listen to extended F keys (from 13 to 37) which it does not do by default.
 set <F13>=^[[25~
+
 "Toggling normal/insert mode in vim
 "vim accepts two kinds of mapping. Those triggered in normal mode (using nnoremap) and those triggered in insert mode (using inoremap).
-
 "Here we want that pressing CapsLock (or <F13> in vim as we defined) in normal mode will go to insert mode, like pressing i does. And we also want to get back to normal mode when pressing CapsLock in insert mode, just like pressing Esc does.
 
 nnoremap <F13> i
 inoremap <F13> <Esc>l
 "Notice the l after Esc. It is here to prevent the caret to move back one character when exiting insert mode.
 
-" As I'm using Dvorak layout, I want to remap move buttons
+" As I'm using Dvorak layout and I want to remap move buttons
 " You may also consider remapping Q and X instead so you get QJKX on the bottom row for navigation (for your left hand).
 nnoremap q h
 nnoremap Q H
@@ -558,3 +559,4 @@ if (has("gui_running"))
 endif
 
 call ApplyLocalSettings(expand('.'))
+

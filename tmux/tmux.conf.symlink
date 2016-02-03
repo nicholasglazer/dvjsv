@@ -3,6 +3,7 @@
 
 # tmux display things in 256 colors
 set -g default-terminal "screen-256color"
+
 set -g status-utf8 on
 
 set -g history-limit 20000
@@ -44,9 +45,9 @@ set-option -g set-titles-string "#T - #W"
 
 # unbind default prefix and set it to Ctrl+a
 unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
-#
+set -g prefix F13
+bind F13 send-prefix
+
 # cycle through panes
 unbind C-a
 unbind o # this is the default key for cycling panes
@@ -97,17 +98,6 @@ unbind p
 bind p paste-buffer
 bind -t vi-copy 'v' begin-selection
 bind -t vi-copy 'y' copy-selection
-
-# switch windows alt+number
-bind-key -n M-1 select-window -t 1
-bind-key -n M-2 select-window -t 2
-bind-key -n M-3 select-window -t 3
-bind-key -n M-4 select-window -t 4
-bind-key -n M-5 select-window -t 5
-bind-key -n M-6 select-window -t 6
-bind-key -n M-7 select-window -t 7
-bind-key -n M-8 select-window -t 8
-bind-key -n M-9 select-window -t 9
 
 ##############################
 ### Color & Style Settings ###
