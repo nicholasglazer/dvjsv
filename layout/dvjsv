@@ -54,4 +54,3 @@ xkb_symbols "dvjsv" {
 
     include "level3(ralt_switch)"
 };
-
