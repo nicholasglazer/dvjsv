@@ -13,12 +13,8 @@ if [ "$(uname)" == 'Linux' ]; then
     echo "Installing node (from nvm)"
     source install/nvm.sh
 
-    echo "Configuring nginx"
-    # create a backup of the original nginx.conf
-    mv /usr/local/etc/nginx/nginx.conf /usr/local/etc/nginx/nginx.original
-    ln -s ~/.dotfiles/nginx/nginx.conf /usr/local/etc/nginx/nginx.conf
-    # symlink the code.dev from dotfiles
-    ln -s ~/.dotfiles/nginx/code.dev /usr/local/etc/nginx/sites-enabled/code.dev
+    echo "Add dvorak(dvjsv) to system"
+    sudo shjs layout/layout.js
 
 fi
 

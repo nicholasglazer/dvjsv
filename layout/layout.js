@@ -15,7 +15,7 @@ var symbols = '/usr/share/X11/xkb/symbols/';
 echo('Copying layout file to: '+symbols)
 cp('dvjsv', symbols);
 
-if (!!grep('<name>dvjsv</name>', rules+'evdev.xml')) {
+if (grep('<name>dvjsv</name>', rules+'evdev.xml')) {
 	echo('Layout configuration already exists');
 } else {
 	echo('Appending configuration for layout inside: '+rules+'evdev.xml');

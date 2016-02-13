@@ -31,19 +31,3 @@ for config in $DOTFILES/config/*; do
         ln -s $config $target
     fi
 done
-
-echo -e "\n\n creating xorg configurations"
-echo "=============================="
-if [ ! -d /usr/share/X11/xorg.conf.d/ ]; then
-    echo "no such directory found"
-fi
-
-for xorg in $DOTFILES/usr/share/X11/xorg.conf.d/*; do
-    target=/usr/share/X11/xorg.conf.d/$( basename $xorg )
-    if [ -e $target ]; then
-        echo "~${target} already exists... Skipping."
-   else
-        echo "Creating symlink for $xorg"
-        sudo ln -s $xorg $target
-    fi
-done

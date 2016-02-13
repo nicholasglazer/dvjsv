@@ -45,8 +45,8 @@ set-option -g set-titles-string "#T - #W"
 
 # unbind default prefix and set it to Ctrl+a
 unbind C-b
-set -g prefix F13
-bind F13 send-prefix
+set -g prefix C-a
+bind C-a send-prefix
 
 # cycle through panes
 unbind C-a

@@ -11,12 +11,12 @@ xkb_symbols "dvjsv" {
     key <AE03> { [    braceleft,              3,       braceright    ] };
     key <AE04> { [    parenleft,              4,       parenright    ] };
     key <AE05> { [        equal,              5                      ] };
-    key <AE06> { [         plus,              6                      ] };
-    key <AE07> { [    ampersand,              7                      ] };
-    key <AE08> { [     asterisk,              8                      ] };
+    key <AE06> { [    ampersand,              6                      ] };
+    key <AE07> { [     asterisk,              7                      ] };
+    key <AE08> { [         plus,              8                      ] };
     key <AE09> { [           at,              9                      ] };
     key <AE10> { [      percent,              0                      ] };
-    key <AE11> { [          bar                                      ] };
+    key <AE11> { [        minus,            bar,            U00B1    ] };
     key <AE12> { [       exclam,     exclamdown                      ] };
     key <BKSP> { [    BackSpace,      BackSpace                      ] };
 
