@@ -3,7 +3,7 @@ xkb_symbols "dvjsv" {
 
     include "us(dvorak)"
     name[Group1] = "English (Javascript Vim Dvorak)";
-
+    //NB change menu button for switching tabs like ctr + tab and ctr + tab + shift
     // symbols row
     key <TLDE> { [        grave,     asciitilde                      ] };
     key <AE01> { [   numbersign,              1                      ] };
