@@ -18,7 +18,7 @@ for config ($ZSH/**/*.zsh) source $config
 if [[ -a ~/.localrc ]]; then
     source ~/.localrc
 fi
-:
+
 eval "$(tmuxifier init -)"
 # initialize autocomplete
 autoload -U compinit

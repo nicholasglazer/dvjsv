@@ -1,5 +1,5 @@
 # reload zsh config
-alias reload!='source ~/.zshrc'
+alias reload='source ~/.zshrc'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -23,9 +23,12 @@ alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
 # Helpers
-alias grep='grep --color=auto'
-alias df='df -h' # disk free, in Gigabytes, not bytes
-alias du='du -h -c' # calculate disk usage for a folder
+alias grep="grep --color=auto"
+alias df="df -h" # disk free, in Gigabytes, not bytes
+alias du="du -h -c" # calculate disk usage for a folder
+
+#temporary change language to 'us' with querty layout
+alias us="setxkbmap us"
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
